@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Giphy App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Fugaz+One" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+</head>
+<body>
+        <div class="Buttons">
+                <div class="row">
+                  <div class="col">Buttons</div> 
+                                      
+                </div>
+        </div>          
+        </div>
+        <div class="Container">
+                <div class="row">
+                  <div class="col" id="results">Results</div>
+                  <div class="col" id="search"><h1>Search</h1>
+                    <form>
+                        <span id="item">GIPHY:
+                                <input type="text" class="form" id="input" placeholder="Enter a category">
+                                <input id="submit" value="Add catergory" type="submit">
+                        </span>
+                    </form>
+                    
+                      
+                          
+                </div>
+                  
+        </div>
+<script>
+    console.log("testing");
+var count=0;
+
+$("#submit").on("click", function(event) {
+    event.preventDefault();
+
+    // Get the to-do "value" from the textbox and store it a variable
+    var input = $("#input").val().trim();
+    console.log(input);
+    // its getting the value from the input box
+    var button = $("#input").val().trim();
+    //create a new variable that will hold a <p> tag
+    var buttonTag = $("<p>");
+    // give it an id such that it will equal the  number of counts
+    buttonTag.attr("id","item-" + count);
+    buttonTag.append(" " );
+
+    var clickButton= $("<button>");
+    clickButton.attr("submit", count);
+    clickButton.addClass("GihpyButtons");
+    clickButton.append(button);
+
+    buttonTag = buttonTag.prepend(clickButton);
+    $(".Buttons").append(buttonTag);
+    $("#input").val("");
+    count++;
+     
+     
+    // when we click the button
+    $(".GihpyButtons").on("click", function(event){
+            var search = input;
+            //gyphy part
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=7VD8eOWI3jamqZuQSkLtqX3aOyjjThHc&limit=5";
+
+            $.ajax({
+            url: queryURL,
+            method: 'GET'
+            }).then(function(response) {
+            console.log(response);
+            $("#results").html("<img src=" + response.data[1] + ">");
+            console.log(response.data[0].url);
+            });
+
+            
+
+
+    });
+    
+
+
+
+    
+});
+
+</script>  
+</body>
+</html>
